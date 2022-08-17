@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Askbootstrap">
+    <meta name="author" content="Askbootstrap">
+    <title>Osahan Eat - Online Food Ordering Website HTML Template</title>
+
+    <link rel="icon" type="image/png" href="img/favicon.png">
+
+    <link href="/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <link href="/assets/vendor/fontawesome/css/all.min.css" rel="stylesheet">
+
+    <link href="/assets/vendor/icofont/icofont.min.css" rel="stylesheet">
+
+    <link href="/assets/vendor/select2/css/select2.min.css" rel="stylesheet">
+
+    <link href="/assets/css/osahan.css" rel="stylesheet">
+</head>
+<body class="bg-white">
+    <div class="container-fluid">
+        <div class="row no-gutter">
+            <div class="d-none d-md-flex col-md-4 col-lg-6 bg-image"></div>
+            <div class="col-md-8 col-lg-6">
+                <div class="login d-flex align-items-center py-5">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-9 col-lg-8 mx-auto pl-5 pr-5">
+                                <h3 class="login-heading mb-4">Wellcome back!</h3>
+                                <form action="/login" method="POST" enctype="multipart/form-data">
+                                    <div class="form-label-group">
+                                        <input type="text" id="username" name="username" class="form-control"
+                                            placeholder="User Name">
+                                        <label for="username">User Name</label>                                        
+                                    </div>
+                                    <div class="form-label-group">
+                                        <input type="password" id="password" name="password" class="form-control"
+                                            placeholder="Password">
+                                        <label for="password">Password</label>
+                                    </div>
+                                    <div>
+                                        <p style="color: red; text-align: center; size: 1rem;">
+                                            <% if(err.account) { %> 
+                                            <%= err.account %> 
+                                            <% } %>
+                                        </p>
+                                    </div>
+                                    <button type="submit"
+                                        class="btn btn-lg btn-outline-primary btn-block btn-login text-uppercase font-weight-bold mb-2">Đăng nhập</button>
+                                    <div class="text-center pt-3">
+                                        Bạn chưa có tài khoản? <a class="font-weight-bold" href="/signUp">Đăng ký ngay</a>
+                                    </div>
+                                    
+                                </form>
+                                <hr class="my-4">
+                                <p class="text-center">ĐĂNG NHẬP BẰNG TÀI KHOẢN MXH</p>
+                                <div class="row">
+                                    <div class="col pr-2">
+                                        <button
+                                            class="btn pl-1 pr-1 btn-lg btn-google font-weight-normal text-white btn-block text-uppercase"
+                                            type="submit"><i class="fab fa-google mr-2"></i> Google</button>
+                                    </div>
+                                    <div class="col pl-2">
+                                        <button
+                                            class="btn pl-1 pr-1 btn-lg btn-facebook font-weight-normal text-white btn-block text-uppercase"
+                                            type="submit"><i class="fab fa-facebook-f mr-2"></i> Facebook</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="/assets/vendor/jquery/jquery-3.3.1.slim.min.js" type="text/javascript"></script>
+
+    <script src="/assets/vendor/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
+
+    <script src="/assets/vendor/select2/js/select2.min.js" type="text/javascript"></script>
+
+    <script src="/assets/js/custom.js" type="text/javascript"></script>
+
+</body>
+</html>
