@@ -102,6 +102,9 @@ class AuthenController {
                     let token = jwt.sign(payload, SECRET_KEY, {
                         expiresIn: 360000
                     });
+                    res.cookie('access_token', token, {
+                        httpOnly:true
+                    }).status(200).json(userInfo);
                     res.status(200).json({
                         token: token
                     });
