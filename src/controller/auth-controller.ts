@@ -31,21 +31,23 @@ class AuthenController {
         }
         try {
             let userSignUp = req.body;
-            let checkedInfo = new User(req.body);
+            userSignUp.role = []
             console.log(userSignUp);
             let username = userSignUp.username;
             let password = userSignUp.password;
             let repassword = userSignUp.re_password;
             let email = userSignUp.email;
             let phone = userSignUp.phone;
+            let role = '62fc44d848d8e5721c43579e';
+            userSignUp.role.push(role)
             if (await Validate.ValidateUserName(username) &&
                 Validate.ValidatePassword(password, repassword) &&
                 Validate.passwordMatch(password, repassword) &&
                 Validate.ValidateEmail(email) &&
                 await Validate.checkEmail(email) &&
                 Validate.ValidatePhone(phone)) {
-                checkedInfo.password = await bcrypt.hash(userSignUp.password, 10);
-                await checkedInfo.save();
+                userSignUp.password = await bcrypt.hash(userSignUp.password, 10);
+                await User.create(userSignUp)
                 console.log('Sign Up Success!');
                 res.status(201).json(userSignUp);
             } else if (await Validate.ValidateUserName(username) == false) {
@@ -113,7 +115,7 @@ class AuthenController {
                     res.cookie('access_token',token, {
                         httpOnly: false
                     });
-                    res.render(`products/home`)
+                    res.redirect('/');
 
                 } else {
                     err.account = 'Tài khoản không tồn tại hoặc sai mật khẩu!'
