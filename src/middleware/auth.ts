@@ -8,12 +8,11 @@ export const auth = (req, res, next : NextFunction) => {
     if (authorization) {
         let accessToken = authorization.split('=')[1];
         if (!accessToken) {
-            res.render(`products/home`)
+            res.redirect('/');
         } else {
             jwt.verify(accessToken, SECRET_KEY, (err, data) => {
                 if (err) {
-                    res.render(`products/home`)
-                } else {
+                    res.redirect('/');
                     req.decoded = data;
                     console.log(data.role)
                     next();
@@ -21,6 +20,6 @@ export const auth = (req, res, next : NextFunction) => {
             });
         }
     } else {
-        res.render(`products/home`)
+        res.redirect('/');
     }
 }

@@ -8,11 +8,11 @@ export const checkIsAdmin = (req, res, next : NextFunction) => {
     if (authorization) {
         let accessToken = authorization.split('=')[1];
         if (!accessToken) {
-            res.render(`products/home`)
+            res.redirect('/');
         } else {
             jwt.verify(accessToken, SECRET_KEY, (err, data) => {
                 if (err) {
-                    res.render(`products/home`)
+                    res.redirect('/');
                 } else {
                     req.decoded = data;
                     let isAdmin = false;
@@ -24,12 +24,12 @@ export const checkIsAdmin = (req, res, next : NextFunction) => {
                     if (isAdmin) {
                         next()
                     } else {
-                        res.render(`products/home`)
+                        res.redirect('/');
                     }
                 }
             });
         }
     } else {
-        res.render(`products/home`)
+        res.redirect(200,'/');
     }
 }

@@ -8,7 +8,7 @@ export interface IUser {
     email?: string;
     address?: string;
     phone?: string;
-    role?: IRole;
+    role?: IRole[];
 }
 
 const userSchema = new Schema<IUser>({
