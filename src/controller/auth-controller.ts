@@ -95,11 +95,11 @@ class AuthenController {
             let nameUsersubmit = req.body.username;
                 let passwordUserSubmit = req.body.password
 
-            let userInfo = await User.findOne({ username:nameUsersubmit });
+            let userInfo = await User.findOne({ username:nameUsersubmit }).populate('role','name');
 
             let comparePassword = await bcrypt.compare(passwordUserSubmit, userInfo.password);
 
-            console.log('userInfo', userInfo.password);
+            console.log(userInfo.role[0].name);
             if (userInfo) {
                 if (comparePassword) {
                     let payload = {
@@ -115,7 +115,21 @@ class AuthenController {
                     res.cookie('access_token',token, {
                         httpOnly: false
                     });
-                    res.redirect('/');
+                    let isAdmin = false;
+                    for (const role of userInfo.role) {
+                        if (role.name === 'admin') {
+                            isAdmin = true
+                            break;
+                        }
+                    }
+                    console.log(isAdmin)
+                    if (isAdmin === true) {
+                        res.redirect('/admin');
+                    } else {
+                        res.redirect('/');
+                    }
+                    
+                    
 
                 } else {
                     err.account = 'Tài khoản không tồn tại hoặc sai mật khẩu!'
