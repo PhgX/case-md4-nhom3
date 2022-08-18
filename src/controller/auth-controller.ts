@@ -31,21 +31,23 @@ class AuthenController {
         }
         try {
             let userSignUp = req.body;
-            let checkedInfo = new User(req.body);
+            userSignUp.role = []
             console.log(userSignUp);
             let username = userSignUp.username;
             let password = userSignUp.password;
             let repassword = userSignUp.re_password;
             let email = userSignUp.email;
             let phone = userSignUp.phone;
+            let role = '62fc44d848d8e5721c43579e';
+            userSignUp.role.push(role)
             if (await Validate.ValidateUserName(username) &&
                 Validate.ValidatePassword(password, repassword) &&
                 Validate.passwordMatch(password, repassword) &&
                 Validate.ValidateEmail(email) &&
                 await Validate.checkEmail(email) &&
                 Validate.ValidatePhone(phone)) {
-                checkedInfo.password = await bcrypt.hash(userSignUp.password, 10);
-                await checkedInfo.save();
+                userSignUp.password = await bcrypt.hash(userSignUp.password, 10);
+                await User.create(userSignUp)
                 console.log('Sign Up Success!');
                 res.status(201).json(userSignUp);
             } else if (await Validate.ValidateUserName(username) == false) {
@@ -90,25 +92,31 @@ class AuthenController {
             account: ''
         }
         try {
-            let user = req.body;
-            let userInfo = await User.findOne({ username: user.username });
-            let comparePassword = await bcrypt.compare(user.password, userInfo.password);
+            let nameUsersubmit = req.body.username;
+                let passwordUserSubmit = req.body.password
+
+            let userInfo = await User.findOne({ username:nameUsersubmit });
+
+            let comparePassword = await bcrypt.compare(passwordUserSubmit, userInfo.password);
+
             console.log('userInfo', userInfo.password);
             if (userInfo) {
                 if (comparePassword) {
                     let payload = {
-                        username : userInfo.username
+                        username : userInfo.username,
+                        id: userInfo._id,
+                        role: userInfo.role
                     }
                     let token = jwt.sign(payload, SECRET_KEY, {
                         expiresIn: 360000
                     });
-                    res.cookie('access_token', token, {
-                        httpOnly:true
-                    }).status(200).json(userInfo);
-                    res.status(200).json({
-                        token: token
+                    console.log(token)
+                    // res.status(200).json(token);
+                    res.cookie('access_token',token, {
+                        httpOnly: false
                     });
-                    console.log('You are in')
+                    res.redirect('/');
+
                 } else {
                     err.account = 'Tài khoản không tồn tại hoặc sai mật khẩu!'
                     res.render('auth/login', { err });
