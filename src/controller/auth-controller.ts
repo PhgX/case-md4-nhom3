@@ -90,22 +90,31 @@ class AuthenController {
             account: ''
         }
         try {
-            let user = req.body;
-            let userInfo = await User.findOne({ username: user.username });
-            let comparePassword = await bcrypt.compare(user.password, userInfo.password);
+            let nameUsersubmit = req.body.username;
+                let passwordUserSubmit = req.body.password
+
+            let userInfo = await User.findOne({ username:nameUsersubmit });
+
+            let comparePassword = await bcrypt.compare(passwordUserSubmit, userInfo.password);
+
             console.log('userInfo', userInfo.password);
             if (userInfo) {
                 if (comparePassword) {
                     let payload = {
-                        username : userInfo.username
+                        username : userInfo.username,
+                        id: userInfo._id,
+                        role: userInfo.role
                     }
                     let token = jwt.sign(payload, SECRET_KEY, {
                         expiresIn: 360000
                     });
-                    res.status(200).json({
-                        token: token
+                    console.log(token)
+                    // res.status(200).json(token);
+                    res.cookie('access_token',token, {
+                        httpOnly: false
                     });
-                    console.log('You are in')
+                    res.render(`products/home`)
+
                 } else {
                     err.account = 'Tài khoản không tồn tại hoặc sai mật khẩu!'
                     res.render('auth/login', { err });
