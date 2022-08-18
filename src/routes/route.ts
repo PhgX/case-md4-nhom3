@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { adminRoute } from "./admin-route";
 import { categoryRoute } from "./category-route";
 import { discountRoute } from "./discount-route";
 import { loginRoutes } from "./login-route";
@@ -14,6 +15,7 @@ import { userRoute } from "./user-route";
 export const router = Router();
 router.use('', loginRoutes);
 router.use('/products',productRoute);
+router.use('/admin',adminRoute);
 router.use('/users',userRoute);
 router.use('/roles', roleRoute);
 router.use('/categories', categoryRoute);
