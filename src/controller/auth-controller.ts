@@ -38,8 +38,8 @@ class AuthenController {
             let repassword = userSignUp.re_password;
             let email = userSignUp.email;
             let phone = userSignUp.phone;
-            let role = '62fc44d848d8e5721c43579e';
-            userSignUp.role.push(role)
+            let customer = '62fc44d848d8e5721c43579e';
+            userSignUp.role.push(customer)
             if (await Validate.ValidateUserName(username) &&
                 Validate.ValidatePassword(password, repassword) &&
                 Validate.passwordMatch(password, repassword) &&
